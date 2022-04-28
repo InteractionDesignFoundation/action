@@ -6,7 +6,7 @@ const split = require('argv-split')
 async function main() {
     await prepareSSH()
     const deployer = await getDeployer()
-    await runDeployer(deployer)
+    return await runDeployer(deployer)
 }
 
 async function prepareSSH() {
@@ -49,6 +49,7 @@ async function getDeployer() {
         core.info(`Downloading Deployer v${version} from ${url}`)
 
         await execa(`curl -LO ${url}`, [], {shell: 'bash', stdio: 'inherit'})
+        await execa(`chmod +x ./deployer.phar`, [], {shell: 'bash', stdio: 'inherit'})
         return './deployer.phar'
     }
 
@@ -79,9 +80,9 @@ async function runDeployer(deployer) {
     const depArgs = split(core.getInput('task'))
     const process = await execa(deployer, depArgs, {stdio: 'inherit'})
 
-    process.exitCode === 0
-        ? core.info(process.stdout.toString())
-        : core.error(process.stderr.toString())
+    if (process.exitCode !== 0) {
+        throw new Error(`Deployer exit with error. Exit code: ${process.exitCode}`)
+    }
 }
 
 main().catch(core.setFailed)
