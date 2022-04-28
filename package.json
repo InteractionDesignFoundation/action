@@ -1,8 +1,11 @@
 {
   "private": true,
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.7.0",
     "argv-split": "^2.0.1",
-    "execa": "^4.1.0"
+    "execa": "^5.1.0"
+  },
+  "scripts": {
+    "build": "ncc build index.js --license licenses.txt"
   }
 }
