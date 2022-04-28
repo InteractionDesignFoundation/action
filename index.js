@@ -60,7 +60,7 @@ function dep() {
     dep = 'deployer.phar'
   }
 
-  execa.sync(dep, '-V')
+  execa.sync(dep, ['-V'])
   const output = execa.sync(dep, split(core.getInput('dep')))
 
   output.exitCode === 0
