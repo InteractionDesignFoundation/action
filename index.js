@@ -36,7 +36,7 @@ function ssh() {
 
 function dep() {
   let dep
-  for (let c of ['vendor/bin/dep', 'bin/dep', 'deployer.phar']) {
+  for (let c of ['./vendor/bin/dep', 'bin/dep', './deployer.phar']) {
     if (fs.existsSync(c)) {
       dep = c
       break
@@ -57,7 +57,7 @@ function dep() {
       url = `https://deployer.org/releases/v${core.getInput('version')}/deployer.phar`;
     }
     execa.commandSync(`curl -LO ${url}`)
-    dep = 'deployer.phar'
+    dep = './deployer.phar'
   }
 
   execa.sync(dep, ['-V'])
