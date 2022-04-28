@@ -8,6 +8,10 @@ inputs:
     description: 'Known hosts'
     required: false
     default: ''
+  task:
+    description: 'Deployer task to run'
+    required: true
+    default: ''
   path:
     description: 'Path to Deployer, e.g. "./deployer.phar"'
     required: false
