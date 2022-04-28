@@ -3,16 +3,16 @@ const fs = require('fs')
 const execa = require('execa')
 const split = require('argv-split')
 
-void function main() {
+void async function main() {
   try {
     ssh()
-    dep()
+    await dep()
   } catch (err) {
     core.setFailed(err.message)
   }
 }()
 
-function ssh() {
+async function ssh() {
   let ssh = `${process.env['HOME']}/.ssh`
 
   if (!fs.existsSync(ssh)) {
@@ -34,8 +34,9 @@ function ssh() {
   }
 }
 
-function dep() {
-  let dep
+function getDep() {
+  let dep = null
+
   for (let c of ['./vendor/bin/dep', 'bin/dep', './deployer.phar']) {
     if (fs.existsSync(c)) {
       dep = c
@@ -60,8 +61,14 @@ function dep() {
     dep = './deployer.phar'
   }
 
+  return dep
+}
+
+async function dep() {
+  const dep = getDep();
+
   execa.sync(dep, ['-V'])
-  const output = execa.sync(dep, split(core.getInput('dep')))
+  const output = await execa(dep, split(core.getInput('dep'))).stdout.pipe(process.stdout)
 
   output.exitCode === 0
     ? core.info(output.stdout.toString())
