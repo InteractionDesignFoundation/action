@@ -8,16 +8,20 @@ inputs:
     description: 'Known hosts'
     required: false
     default: ''
-  dep:
-    description: 'Deployer arguments'
+  task:
+    description: 'Deployer task to run'
+    required: true
+    default: ''
+  path:
+    description: 'Path to Deployer, e.g. "./deployer.phar"'
     required: false
     default: ''
   version:
-    description: 'Deployer version'
+    description: 'Deployer version, e.g. "7.0.0-rc.8"'
     required: false
     default: ''
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'index.js'
 branding:
   color: blue
