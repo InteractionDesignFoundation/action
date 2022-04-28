@@ -4758,12 +4758,12 @@ async function prepareSSH() {
  * @return {Promise<string>}
  */
 async function getDeployer() {
-    if (core.getInput('path') && core.getInput('version')) {
-        throw new Error('Incompatible arguments "path" and "version" detected, please use only of them.')
+    if (core.getInput('bin-path') && core.getInput('version')) {
+        throw new Error('Incompatible arguments "bin-path" and "version" detected, please use only of them.')
     }
 
-    if (core.getInput('path')) {
-        return core.getInput('path')
+    if (core.getInput('bin-path')) {
+        return core.getInput('bin-path')
     }
 
     const version = core.getInput('version')
@@ -4787,7 +4787,7 @@ async function getDeployer() {
         }
     } catch (error) {}
 
-    throw new Error('Deployer bin not found. To fix it, please specify `path` or `version` options.')
+    throw new Error('Deployer bin not found. To fix it, please specify `bin-path` or `version` options.')
 }
 
 /**
@@ -4795,8 +4795,10 @@ async function getDeployer() {
  * @return {Promise<string>} Path to deployer
  */
 async function downloadDeployer(version) {
+    version = version.replace(/^v/, '')
+
     /** @see https://deployer.org/download */
-    const url = version.startWith('6')
+    const url = version.startsWith('6')
         ? `https://deployer.org/releases/v${version}/deployer.phar`
         : `https://github.com/deployphp/deployer/releases/download/v${version}/deployer.phar`
 
@@ -4813,9 +4815,9 @@ async function downloadDeployer(version) {
  * @return {Promise<void>}
  */
 async function runDeployer(deployer) {
-    await execa(deployer, ['-V'], {stdio: 'inherit'})
+    await execa(deployer, ['-V'])
 
-    const depArgs = split(core.getInput('task'))
+    const depArgs = split(core.getInput('task')).concat(['--ansi', '--no-interaction'])
     const process = await execa(deployer, depArgs, {stdio: 'inherit'})
 
     if (process.exitCode !== 0) {
