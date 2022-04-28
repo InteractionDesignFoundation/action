@@ -8,12 +8,12 @@ inputs:
     description: 'Known hosts'
     required: false
     default: ''
-  dep:
-    description: 'Deployer arguments'
+  path:
+    description: 'Path to Deployer, e.g. "./deployer.phar"'
     required: false
     default: ''
   version:
-    description: 'Deployer version'
+    description: 'Deployer version, e.g. "7.0.0-rc.8"'
     required: false
     default: ''
 runs:
