@@ -4,7 +4,7 @@ Deploy your application using Deployer: a deployment tool written in PHP with su
 
 ```yaml
   - name: Deploy
-    uses: interactiondesignfoundation/deployer-action@2
+    uses: interactiondesignfoundation/deployer-action@3
     with:
       private-key: ${{ secrets.PRIVATE_KEY }}
       task: deploy prod -v
@@ -15,7 +15,7 @@ Deploy your application using Deployer: a deployment tool written in PHP with su
 
 ```yaml
   - name: Deploy
-    uses: interactiondesignfoundation/deployer-action@2
+    uses: interactiondesignfoundation/deployer-action@3
     with:
       # Required. Private key for connecting to remote hosts. To generate private key:
       # `ssh-keygen -o -t rsa -C 'action@deployer.org'`.
@@ -77,7 +77,7 @@ jobs:
             php-version: 8.1
 
         - name: Deploy
-          uses: interactiondesignfoundation/deployer-action@2
+          uses: interactiondesignfoundation/deployer-action@3
           with:
             private-key: ${{ secrets.PRIVATE_KEY }}
             known-hosts: ${{ secrets.KNOWN_HOSTS }}
