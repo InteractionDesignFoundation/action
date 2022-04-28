@@ -12,8 +12,8 @@ inputs:
     description: 'Deployer task to run'
     required: true
     default: ''
-  path:
-    description: 'Path to Deployer, e.g. "./deployer.phar"'
+  bin-path:
+    description: 'Path to Deployer binary, e.g. "./deployer.phar"'
     required: false
     default: ''
   version:
